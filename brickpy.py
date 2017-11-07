@@ -45,6 +45,10 @@ def main(argv):
             sku = arg
         elif opt in ("-z", "--zip"):
             zipcode = arg
+        else:
+            print('invalid option') 
+            usage()
+            sys.exit(2)
 
     data = {
         'search_method': 'sku',
