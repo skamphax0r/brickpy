@@ -1,7 +1,14 @@
 ''' brickpy module. '''
 import sys
+import getopt
 import requests
 from bs4 import BeautifulSoup
+
+
+def usage():
+    print("-z [--zip=]   - Zipcode")
+    print("-s [--sku=]   - SKU (or DCTI for Target)")
+    print("-h [--help]   - print this message")
 
 
 def target(data):
@@ -22,10 +29,23 @@ def target(data):
         print('---------')
 
 
-def main(**kwargs):
+def main(argv):
     ''' main function. '''
-    sku = kwargs['sku']
-    zipcode = kwargs['zip']
+
+    try:
+        opts, args = getopt.getopt(argv, "hs:z:", ["help", "sku=", "zip="])
+    except getopt.GetoptError:
+        usage()
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            usage()
+            sys.exit()
+        elif opt in ("-s", "--sku"):
+            sku = arg
+        elif opt in ("-z", "--zip"):
+            zipcode = arg
+
     data = {
         'search_method': 'sku',
         'sku': sku,
@@ -37,4 +57,4 @@ def main(**kwargs):
 
 
 if __name__ == '__main__':
-    main(sku=sys.argv[1], zip=sys.argv[2])
+    main(sys.argv[1:])
