@@ -7,9 +7,24 @@ from bs4 import BeautifulSoup
 
 def usage():
     print("-z [--zip=]   - Zipcode")
-    print("-s [--sku=]   - SKU (or DCTI for Target)")
+    print("-s [--sku=]   - SKU (or DCPI for Target)")
     print("-h [--help]   - print this message")
 
+def walmart(data):
+    ''' check walmart for availability '''
+    data = data
+    lookup = requests.post('https://brockseek.com/walmst-inventory-checker/',
+                           data=data)
+    soup = BeautifulSoup(lookup.text, 'html.parser')
+
+    for avail in soup.find_all(class_='availability-2'):
+        print('store-name: '+avail.parent.parent.parent.find('h4').text)
+        print('address: ' +
+              avail.parent.parent.parent.find(class_='store-address').text)
+        print('price (if available) :' +
+              avail.parent.parent.parent.find(class_='store-price').text
+              .strip())
+        print('---------')
 
 def target(data):
     ''' Check target for availability. '''
