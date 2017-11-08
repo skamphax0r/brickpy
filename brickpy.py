@@ -9,6 +9,7 @@ def usage():
     print("-z [--zip=]   - Zipcode")
     print("-s [--sku=]   - SKU (or DCPI for Target)")
     print("-h [--help]   - print this message")
+    print("-t [--type=]  - store type (currently target, walmart)")
 
 
 def walmart(data):
