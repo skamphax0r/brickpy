@@ -65,7 +65,7 @@ def main(argv):
             sku = arg
         elif opt in ("-z", "--zip"):
             zipcode = arg
-        elif opt in ("-t"):
+        elif opt in ("-t", "--type"):
             storetype = arg
         else:
             print('invalid option')
